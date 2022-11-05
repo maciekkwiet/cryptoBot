@@ -5,8 +5,6 @@ import { useSocket } from 'socketio-hooks';
 import { ThemeProvider } from '@material-ui/core';
 
 import Home from 'views/Home';
-import Room from 'views/Room';
-import RoomJoin from 'views/RoomJoin';
 import Template from 'Components/Template';
 import theme from 'theme';
 
@@ -20,12 +18,6 @@ function App() {
       <BrowserRouter>
         <Template>
           <Switch>
-            <Route path="/room/:roomId/join">
-              <RoomJoin />
-            </Route>
-            <Route path="/room/:roomId">
-              <Room />
-            </Route>
             <Route path="/">
               <Home />
             </Route>

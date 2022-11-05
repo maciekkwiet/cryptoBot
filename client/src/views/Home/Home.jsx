@@ -12,14 +12,15 @@ const Home = () => {
   const classes = HomeStyle();
   return (
     <>
-      <MainBox className={classes.wrapper}>
+      <Typography variant="h6">CRYPTO</Typography>
+      {/* <MainBox className={classes.wrapper}>
         <div className={classes.wrapperUserBox}></div>
         <div className={classes.wrapperItem}>
           <PromotedText text={'POINTING SESSION'} />
         </div>
         <div className={classes.wrapperItem}>
           <div className={classes.wrapperItemColumn}>
-            <Typography variant="h6">CREATE NEW SESSION</Typography>
+            <Typography variant="h6">CRYPTO</Typography>
             <CreateNewRoom />
           </div>
           <Divider orientation="vertical" flexItem className={classes.divider} />
@@ -28,7 +29,7 @@ const Home = () => {
             <JoinRoom />
           </div>
         </div>
-      </MainBox>
+      </MainBox> */}
     </>
   );
 };
