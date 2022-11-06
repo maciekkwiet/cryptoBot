@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { sessionController } from '@controllers/session';
+import { listingController } from '@controllers/endpoints/listing';
 
 const router = Router();
 
-router.use('/session', sessionController);
+router.use('/listing', listingController);
 
 export { router as apiController };
