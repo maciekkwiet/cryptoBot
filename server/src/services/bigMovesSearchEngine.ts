@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import { getPairsWithPrice } from './gateIoUtils';
 import { BigMoveCurrency, PairDetails } from './types';
 
-export const searchMoveCurrencies = async (interval = 10, percentageDifference = 3.5, baseVolume = 1000000) => {
+export const searchMoveCurrencies = async (interval = 20, percentageDifference = 5, baseVolume = 5000000) => {
     setInterval(async () => {
         const newPairsWithPrice = await getPairsWithPrice()
         const oldPairsWithPriceStringify = await fs.readFileSync('pairsWithPrice.json', 'utf8')

@@ -36,7 +36,6 @@ const UserNameInput = () => {
     upsertRoomInfo(roomId, name, state?.isAdmin);
     sendName({ name, roomId });
     history.push(`/room/${roomId}`);
-    console.log();
   };
 
   return (
