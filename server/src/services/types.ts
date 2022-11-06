@@ -11,4 +11,5 @@ export interface BigMoveCurrency {
     newPrice?: string,
     volume?: string,
     date: Date,
+    percentageChange?: string,
 }

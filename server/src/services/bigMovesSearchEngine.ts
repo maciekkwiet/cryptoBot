@@ -19,16 +19,17 @@ export const searchMoveCurrencies = async (interval = 10, percentageDifference =
 
             if (Math.abs(1 - Number(oldPair.lastPrice)/Number(newPair?.lastPrice)) > (percentageDifference / 100) &&
                 Number(newPair?.baseVolume) > baseVolume) {
+                const percentageChange = Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? (((Number(oldPair?.lastPrice) - Number(newPair?.lastPrice)) / Number(oldPair.lastPrice))) : ((Number(newPair?.lastPrice) - Number(oldPair.lastPrice)) / Number(oldPair.lastPrice))
                 const tokenProp = {
                     pair: oldPair.currencyPair,
                     oldPrice: oldPair.lastPrice,
                     newPrice: newPair?.lastPrice,
                     volume: newPair?.baseVolume,
                     date: new Date(),
+                    percentageChange: Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? `-${percentageChange * 100}` : `+${percentageChange * 100}`
                 }
                 bigMoveCurrencies.push(tokenProp)
                 console.log(tokenProp)
-                // TODO save with date and values
             }
         })
 
