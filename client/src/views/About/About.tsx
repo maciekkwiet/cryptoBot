@@ -3,13 +3,13 @@ import React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-const Home = () => {
+const About = () => {
   // const classes = HomeStyle();
   return (
     <>
-      <Typography variant="h6">Home</Typography>
+      <Typography variant="h6">About</Typography>
     </>
   );
 };
 
-export default Home;
+export default About;

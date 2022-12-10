@@ -17,7 +17,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 // import headerStyles from './HeaderStyles';
 
 
-const pages = ['O mnie', 'Wykresy', 'Boty'];
+const pages = ['Wykresy', 'Boty', 'O mnie'];
 const settings = ['Profil', 'Konto', 'Wyloguj'];
 
 const Header = () => {
