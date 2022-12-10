@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/core';
 import Home from './views/Home';
 import Charts from './views/Charts';
 import Bots from './views/Bots';
+import About from './views/About';
 import Template from './Components/Template';
 import theme from './theme';
 
@@ -23,7 +24,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/charts" element={<Charts />} />
             <Route path="/bots" element={<Bots />} />
-            <Route path="/about" element={<Home />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </Template>
       </BrowserRouter>

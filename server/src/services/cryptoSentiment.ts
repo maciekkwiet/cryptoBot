@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-export const getCryptoSentiment = async (numberOfDays: number = 30) => {
+export const getCryptoSentiment = async (numberOfDays: number = 300) => {
     const response = await fetch("https://alternative.me/api/crypto/fear-and-greed-index/history", {
         "headers": {
           "accept": "application/json, text/plain, */*",

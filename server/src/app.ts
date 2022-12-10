@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
 
 import { socketController } from './routes/socket';
 import { router } from 'routes';
@@ -30,4 +31,6 @@ server.listen(port, () => console.log(`Server listening on port ${port}`));
 
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(router);
