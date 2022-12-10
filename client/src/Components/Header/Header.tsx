@@ -14,13 +14,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+import { useNavigate } from 'react-router-dom';
+import {Pages, UserSettings as settings, UrlPages} from '../../utils/constants'
+
 // import headerStyles from './HeaderStyles';
 
 
-const pages = ['Wykresy', 'Boty', 'O mnie'];
-const settings = ['Profil', 'Konto', 'Wyloguj'];
 
 const Header = () => {
+  const navigate = useNavigate();
   // const classes = headerStyles();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -36,6 +38,13 @@ const Header = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const moveToPage = page => {
+    const urlToNavigate = UrlPages.find(element => element.polishTranslation === page)?.name
+
+    navigate(`/${urlToNavigate}`)
+    setAnchorElNav(null);
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -94,8 +103,8 @@ const Header = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {Pages.map((page) => (
+                <MenuItem key={page} onClick={() => moveToPage(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -121,10 +130,10 @@ const Header = () => {
             CryptoRadar
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {Pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => moveToPage(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
