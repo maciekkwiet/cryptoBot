@@ -22,6 +22,7 @@ export const searchAndUpdateList = () => {
         if (JSON.stringify(latestCoin) !== JSON.stringify(lastListedCoin)) {
             latestCoin = lastListedCoin
             fs.writeFile('lastListingCoins.json', JSON.stringify(latestCoin), () => {})
+            console.log(lastListedCoin)
         }
         //in future: 0.55s
     }, 5000)

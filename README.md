@@ -1,1 +1,1 @@
-# CryptoBot
+# CryptoRadar
