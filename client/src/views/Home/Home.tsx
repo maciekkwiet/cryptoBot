@@ -1,13 +1,13 @@
 import React from 'react';
-import HomeStyle from './HomeStyle';
+// import HomeStyle from './HomeStyle';
 
 import { Typography } from '@material-ui/core';
 
 const Home = () => {
-  const classes = HomeStyle();
+  // const classes = HomeStyle();
   return (
     <>
-      <Typography variant="h6">CryptoRadar</Typography>
+      <Typography variant="h6">Jest fajnie....</Typography>
       {/* <MainBox className={classes.wrapper}>
         <div className={classes.wrapperUserBox}></div>
         <div className={classes.wrapperItem}>

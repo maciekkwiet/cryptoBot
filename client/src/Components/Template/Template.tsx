@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Box } from '@material-ui/core';
 
-import Header from 'Components/Header/Header';
+import Header from '../Header/Header';
 import TemplateStyles from './TemplateStyles';
 
-const Template = props => {
+const Template = (props: any) => {
   const classes = TemplateStyles();
 
   return (

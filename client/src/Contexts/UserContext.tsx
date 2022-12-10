@@ -1,20 +1,20 @@
 import React, { useState, useContext } from 'react';
 
 const UserContext = React.createContext(null);
-const UserContextProvider = ({ children }) => {
+const UserContextProvider = ({ children }: {children: any}) => {
   const serializedName = window.localStorage.getItem('DEFAULT_NAME') ?? '';
   const serializedUserRooms = JSON.parse(window.sessionStorage.getItem('USER_ROOMS') ?? '[]');
 
   const [defaultName, setDefaultName] = useState(serializedName);
   const [userRooms, setUserRooms] = useState(serializedUserRooms);
 
-  const changeDefaultName = newName => {
+  const changeDefaultName = (newName: string) => {
     window.localStorage.setItem('DEFAULT_NAME', newName);
     setDefaultName(newName);
   };
 
-  const upsertRoomInfo = (roomId, name, isAdmin) => {
-    const room = userRooms.find(room => room.roomId === roomId);
+  const upsertRoomInfo = (roomId: string, name: string, isAdmin: boolean) => {
+    const room = userRooms.find((room: any) => room.roomId === roomId);
 
     const newUserRooms = [...userRooms];
     if (room) {

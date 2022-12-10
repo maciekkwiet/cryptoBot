@@ -14,14 +14,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import headerStyles from './HeaderStyles';
+// import headerStyles from './HeaderStyles';
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['O mnie', 'Wykresy', 'Boty'];
+const settings = ['Profil', 'Konto', 'Wyloguj'];
 
 const Header = () => {
-  const classes = headerStyles();
+  // const classes = headerStyles();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -62,7 +62,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CryptoRadar
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -118,7 +118,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CryptoRadar
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

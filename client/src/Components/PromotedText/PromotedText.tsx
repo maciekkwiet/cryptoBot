@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, Typography } from '@material-ui/core';
 import PromotedTextStyles from './PromotedTextStyles';
 
-const PromotedText = ({ text }) => {
+const PromotedText = ({ text }: {text: string}) => {
   const classes = PromotedTextStyles();
 
   return (
