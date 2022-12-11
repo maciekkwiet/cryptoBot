@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-export const getCryptoSentiment = async (numberOfDays: number = 300) => {
+export const getCryptoSentiment = async (numberOfDays: number = 1000) => {
     const response = await fetch("https://alternative.me/api/crypto/fear-and-greed-index/history", {
         "headers": {
           "accept": "application/json, text/plain, */*",
@@ -21,5 +21,9 @@ export const getCryptoSentiment = async (numberOfDays: number = 300) => {
 
     const result = await response.json()
 
-    return result
+    const values = result.data.datasets[0].data
+    const labels = result.data.labels
+    const preparedData = labels.map((label: string, index: number) => ({name: label, value: values[index]}))
+
+    return preparedData
 }
