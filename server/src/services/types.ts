@@ -9,7 +9,9 @@ export interface BigMoveCurrency {
     pair: string,
     oldPrice: string,
     newPrice?: string,
-    volume?: string,
+    oldVolume?: string | number,
+    newVolume?: string | number,
     date: Date,
-    percentageChange?: string,
+    percentagePriceChange?: string,
+    percentageVolumeChange?: string,
 }

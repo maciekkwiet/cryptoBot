@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import { getPairsWithPrice } from './gateIoUtils';
 import { BigMoveCurrency, PairDetails } from './types';
 
-export const searchMoveCurrencies = async (interval = 30, percentageDifference = 5, baseVolume = 5000000) => {
+export const searchMoveCurrencies = async (interval = 30, percentagePriceDifference = 5, percentageVolumeDifference = 10, baseVolume = 5000000) => {
     setInterval(async () => {
         const newPairsWithPrice = await getPairsWithPrice()
         const oldPairsWithPriceStringify = await fs.readFileSync('pairsWithPrice.json', 'utf8')
@@ -18,16 +18,24 @@ export const searchMoveCurrencies = async (interval = 30, percentageDifference =
         oldPairsWithPrice.forEach(oldPair => {
             const newPair = newPairsWithPrice.find(pair => pair.currencyPair === oldPair.currencyPair)
 
-            if (Math.abs(1 - Number(oldPair.lastPrice)/Number(newPair?.lastPrice)) > (percentageDifference / 100) &&
-                Number(newPair?.baseVolume) > baseVolume) {
-                const percentageChange = Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? (((Number(oldPair?.lastPrice) - Number(newPair?.lastPrice)) / Number(oldPair.lastPrice))) : ((Number(newPair?.lastPrice) - Number(oldPair.lastPrice)) / Number(oldPair.lastPrice))
+            if ((Math.abs(1 - Number(oldPair.lastPrice)/Number(newPair?.lastPrice)) > (percentagePriceDifference / 100) ||
+                    Math.abs(1 - Number(oldPair.baseVolume)/Number(newPair?.baseVolume)) > (percentageVolumeDifference / 100)) &&
+                    Number(newPair?.baseVolume) > baseVolume) {
+                const percentagePriceChange = Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? 
+                    (((Number(oldPair?.lastPrice) - Number(newPair?.lastPrice)) / Number(oldPair.lastPrice))) :
+                    ((Number(newPair?.lastPrice) - Number(oldPair.lastPrice)) / Number(oldPair.lastPrice))
+                const percentageVolumeChange = Number(oldPair.baseVolume) > Number(newPair?.baseVolume) ? 
+                    (((Number(oldPair?.baseVolume) - Number(newPair?.baseVolume)) / Number(oldPair.baseVolume))) :
+                    ((Number(newPair?.baseVolume) - Number(oldPair.baseVolume)) / Number(oldPair.baseVolume))
                 const tokenProp = {
                     pair: oldPair.currencyPair,
                     oldPrice: oldPair.lastPrice,
                     newPrice: newPair?.lastPrice,
-                    volume: newPair?.baseVolume,
+                    newVolume: newPair?.baseVolume ? Number.parseFloat(newPair?.baseVolume)?.toFixed(2) : 0,
+                    oldVolume: oldPair?.baseVolume ? Number.parseFloat(oldPair?.baseVolume)?.toFixed(2) : 0,
                     date: new Date(),
-                    percentageChange: Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? `-${percentageChange * 100}` : `+${percentageChange * 100}`
+                    percentagePriceChange: Number(oldPair.lastPrice) > Number(newPair?.lastPrice) ? `-${(percentagePriceChange * 100).toFixed(2)}` : `+${(percentagePriceChange * 100).toFixed(2)}`,
+                    percentageVolumeChange: Number(oldPair.baseVolume) > Number(newPair?.baseVolume) ? `-${(percentageVolumeChange * 100).toFixed(2)}` : `+${(percentageVolumeChange * 100).toFixed(2)}`
                 }
                 bigMoveCurrencies.push(tokenProp)
                 console.log(tokenProp)

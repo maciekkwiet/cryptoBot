@@ -15,29 +15,49 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 import { useNavigate } from 'react-router-dom';
-import {Pages, UserSettings as settings, UrlPages} from '../../utils/constants'
+import {Pages, UserSettings, UrlPages, ChartsSettings, BotsSettings} from '../../utils/constants'
 
-// import headerStyles from './HeaderStyles';
-
+import headerStyles from './HeaderStyles'
 
 
 const Header = () => {
-  const navigate = useNavigate();
-  // const classes = headerStyles();
+  const navigate = useNavigate()
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const classes = headerStyles()
+
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const [anchorElCharts, setAnchorElCharts] = React.useState<null | HTMLElement>(null)
+  const [anchorElBots, setAnchorElBots] = React.useState<null | HTMLElement>(null)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorElNav(event.currentTarget)
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget)
+  };
+
+  const handleOpenChartsMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElCharts(event.currentTarget)
+  };
+
+  const handleOpenBotsMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElBots(event.currentTarget)
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorElNav(null)
   };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+
+  const handleCloseMenu = () => {
+    setAnchorElCharts(null)
+    setAnchorElBots(null)
+    setAnchorElUser(null)
+  }
 
   const moveToPage = page => {
     const urlToNavigate = UrlPages.find(element => element.polishTranslation === page)?.name
@@ -45,10 +65,6 @@ const Header = () => {
     navigate(`/${urlToNavigate}`)
     setAnchorElNav(null);
   }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <>
@@ -130,15 +146,92 @@ const Header = () => {
             CryptoRadar
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {Pages.map((page) => (
+            <Button
+                  key={Pages[0]}
+                  onClick={() => moveToPage(Pages[0])}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {Pages[0]}
+            </Button>
+            <>
               <Button
-                key={page}
-                onClick={() => moveToPage(page)}
+                key={Pages[1]}
+                onClick={(e) => handleOpenChartsMenu(e)}
+                onMouseOver={(e) => {
+                  handleOpenChartsMenu(e)
+                }}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {Pages[1]}
               </Button>
-            ))}
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar2"
+                anchorEl={anchorElCharts}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElCharts)}
+                onClose={handleCloseMenu}
+                MenuListProps={{ onMouseLeave: handleCloseMenu }}
+              >
+                {ChartsSettings.map((setting) => (
+                    <MenuItem key={setting} onClick={() => moveToPage(Pages[1])}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+                }
+              </Menu>
+            </>
+            <>
+              <Button
+                key={Pages[2]}
+                onClick={(e) => handleOpenBotsMenu(e)}
+                onMouseOver={(e) => {
+                  handleOpenBotsMenu(e)
+                }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {Pages[2]}
+              </Button>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar2"
+                anchorEl={anchorElBots}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElBots)}
+                onClose={handleCloseMenu}
+                MenuListProps={{ onMouseLeave: handleCloseMenu }}
+              >
+                {BotsSettings.map((setting) => (
+                    <MenuItem key={setting} onClick={() => moveToPage(Pages[2])}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+                }
+              </Menu>
+            </>
+            <Button
+                  key={Pages[3]}
+                  onClick={() => moveToPage(Pages[3])}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {Pages[3]}
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -162,8 +255,9 @@ const Header = () => {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              // MenuListProps={{ onMouseLeave: handleCloseUserMenu }}
             >
-              {settings.map((setting) => (
+              {UserSettings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
