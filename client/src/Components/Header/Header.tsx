@@ -21,9 +21,11 @@ import headerStyles from './HeaderStyles'
 
 
 const Header = () => {
+  let currentlyChartsHovering = false;
+  let currentlyBotsHovering = false;
   const navigate = useNavigate()
 
-  const classes = headerStyles()
+  const styles = headerStyles()
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
@@ -32,35 +34,59 @@ const Header = () => {
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
-  };
+  }
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
-  };
-
+  }
   const handleOpenChartsMenu = (event: React.MouseEvent<HTMLElement>) => {
+    handleChartsHover()
     setAnchorElCharts(event.currentTarget)
-  };
-
+  }
   const handleOpenBotsMenu = (event: React.MouseEvent<HTMLElement>) => {
+    handleBotsHover()
     setAnchorElBots(event.currentTarget)
-  };
+  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  };
-
+  }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-
   const handleCloseMenu = () => {
     setAnchorElCharts(null)
     setAnchorElBots(null)
     setAnchorElUser(null)
   }
 
-  const moveToPage = page => {
-    const urlToNavigate = UrlPages.find(element => element.polishTranslation === page)?.name
+  const handleBotsHover = () => {
+    currentlyBotsHovering = true
+  }
+  const handleChartsHover = () => {
+    currentlyChartsHovering = true
+  }
+
+  const handleCloseBotsHover = () => {
+    currentlyBotsHovering = false
+    setTimeout(() => {
+      if (!currentlyBotsHovering) {
+        handleCloseMenu()
+      }
+    }, 50)
+  }
+  const handleCloseChartsHover = () => {
+    currentlyChartsHovering = false
+    setTimeout(() => {
+      if (!currentlyChartsHovering) {
+        handleCloseMenu()
+      }
+    }, 50)
+  }
+
+  const moveToPage = (page, setting = undefined) => {
+    console.log(setting)
+
+    const urlToNavigate = UrlPages.find(element => element.polishTranslation === page)?.name ?? UrlPages[0].name
 
     navigate(`/${urlToNavigate}`)
     setAnchorElNav(null);
@@ -156,10 +182,13 @@ const Header = () => {
             <>
               <Button
                 key={Pages[1]}
+                aria-owns={anchorElCharts ? "simple-menu" : undefined}
+                aria-haspopup="true"
                 onClick={(e) => handleOpenChartsMenu(e)}
                 onMouseOver={(e) => {
                   handleOpenChartsMenu(e)
                 }}
+                onMouseLeave={handleCloseChartsHover}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {Pages[1]}
@@ -179,23 +208,40 @@ const Header = () => {
                 }}
                 open={Boolean(anchorElCharts)}
                 onClose={handleCloseMenu}
-                MenuListProps={{ onMouseLeave: handleCloseMenu }}
+                MenuListProps={{
+                  onMouseLeave: handleCloseChartsHover,
+                  onMouseEnter: handleChartsHover,
+                  style: { pointerEvents: "auto" }
+                }}
+                PopoverClasses={{
+                  root: styles.popOverRoot
+                }}
               >
                 {ChartsSettings.map((setting) => (
-                    <MenuItem key={setting} onClick={() => moveToPage(Pages[1])}>
+                    <MenuItem key={setting} onClick={() => moveToPage(Pages[1], setting)}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                   ))
                 }
               </Menu>
             </>
+            <Button
+                  key={Pages[4]}
+                  onClick={() => moveToPage(Pages[4])}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {Pages[4]}
+            </Button>
             <>
               <Button
                 key={Pages[2]}
+                aria-owns={anchorElBots ? "simple-menu" : undefined}
+                aria-haspopup="true"
                 onClick={(e) => handleOpenBotsMenu(e)}
                 onMouseOver={(e) => {
                   handleOpenBotsMenu(e)
                 }}
+                onMouseLeave={handleCloseBotsHover}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {Pages[2]}
@@ -215,10 +261,17 @@ const Header = () => {
                 }}
                 open={Boolean(anchorElBots)}
                 onClose={handleCloseMenu}
-                MenuListProps={{ onMouseLeave: handleCloseMenu }}
+                MenuListProps={{
+                  onMouseLeave: handleCloseMenu,
+                  onMouseEnter: handleBotsHover,
+                  style: { pointerEvents: "auto" }
+                }}
+                PopoverClasses={{
+                  root: styles.popOverRoot
+                }}
               >
                 {BotsSettings.map((setting) => (
-                    <MenuItem key={setting} onClick={() => moveToPage(Pages[2])}>
+                    <MenuItem key={setting} onClick={() => moveToPage(Pages[2], setting)}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                   ))
@@ -227,7 +280,7 @@ const Header = () => {
             </>
             <Button
                   key={Pages[3]}
-                  onClick={() => moveToPage(Pages[3])}
+                  onClick={(e) => moveToPage(e, Pages[3])}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   {Pages[3]}
@@ -255,7 +308,6 @@ const Header = () => {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-              // MenuListProps={{ onMouseLeave: handleCloseUserMenu }}
             >
               {UserSettings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>

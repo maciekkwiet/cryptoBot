@@ -7,6 +7,10 @@ const headerStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(4),
   },
 
+  popOverRoot: {
+    pointerEvents: "none"
+  },
+
   img: {
     display: 'block',
     height: '7em',
