@@ -8,14 +8,14 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useSocket } from 'socketio-hooks'
 import { StyledTableRow } from './BotsStyle'
-// import HomeStyle from './HomeStyle';
+import { connect } from 'react-redux'
+import addCoinPair from 'actions'
 
-const Bots = () => {
-  const [rows, setRows] = useState([])
-  // const classes = HomeStyle();
+const Bots = (props) => {
+  const { stateAll, addCoinPairAction, rows } = props
 
   useSocket('NEW_BIG_MOVE', (data) => {
-    setRows([{
+    addCoinPairAction([{
       pair: data.tokenProp.pair,
       oldPrice: data.tokenProp.oldPrice,
       newPrice: data.tokenProp.newPrice,
@@ -65,4 +65,13 @@ const Bots = () => {
   )
 }
 
-export default Bots
+const mapStateToProps = state => ({
+  stateAll: state,
+  rows: state?.coinPairs ?? [],
+})
+
+const mapDispatchToProps = dispatch => ({
+  addCoinPairAction: (payload) => dispatch(addCoinPair(payload)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Bots);

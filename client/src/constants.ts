@@ -1,0 +1,1 @@
+export const ADD_COIN_PAIR = "ADD_COIN_PAIR";

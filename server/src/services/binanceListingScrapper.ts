@@ -4,10 +4,15 @@ import * as fs from 'fs'
 const searchExpression = 'Binance Will List'
 
 export const getLastListedCoin = async () => {
-    const response = await fetch('https://www.binance.com/bapi/composite/v1/public/cms/article/catalog/list/query?catalogId=48&pageNo=1&pageSize=50&rnd=')
-    const latestAnnouncement = await response.json() as any
+    let latestAnnouncement
+    try {
+        const response = await fetch('https://www.binance.com/bapi/composite/v1/public/cms/article/catalog/list/query?catalogId=48&pageNo=1&pageSize=50&rnd=') // do zmiany -> najpewniej zmienili link
+        latestAnnouncement = await response?.json() as any
+    } catch (e) {
+        // console.error(e);
+      }
 
-    const lastTitles = latestAnnouncement.data.articles.map((article: {title: string}) => article.title) as string[]
+    const lastTitles = latestAnnouncement?.data.articles.map((article: {title: string}) => article.title) as string[] ?? []
 
     const filteredTitles = lastTitles.filter(title => title.includes(searchExpression))
 
